@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ThemeToggle from './ThemeToggle';
-import { Code } from 'lucide-react';
+import { Navigation2 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 
@@ -18,13 +18,13 @@ const Header: React.FC = () => {
           "bg-primary rounded-md p-1.5",
           theme === 'futuristic' && "animate-cyber-glow"
         )}>
-          <Code className="h-5 w-5 text-primary-foreground" />
+          <Navigation2 className="h-5 w-5 text-primary-foreground" />
         </div>
         <span className={cn(
           "text-lg font-semibold tracking-tight",
           theme === 'futuristic' && "cyber-highlight"
         )}>
-          GroqCraft Studio
+          Attores Studio
         </span>
       </div>
       
