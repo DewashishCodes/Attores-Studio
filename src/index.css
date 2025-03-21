@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -81,6 +82,43 @@
     --editor: 225 23% 9%;
     --editor-foreground: 210 40% 98%;
   }
+  
+  .futuristic {
+    --background: 220 10% 4%;
+    --foreground: 0 0% 98%;
+    
+    --card: 220 10% 6%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 220 10% 4%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 0 84% 50%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 220 10% 8%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 220 10% 10%;
+    --muted-foreground: 220 10% 70%;
+    
+    --accent: 0 84% 50%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 63% 40%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 220 10% 12%;
+    --input: 220 10% 10%;
+    --ring: 0 84% 50%;
+    
+    --code: 220 10% 8%; 
+    --code-foreground: 0 0% 98%;
+    --code-border: 220 10% 12%;
+    
+    --editor: 0 0% 4%;
+    --editor-foreground: 0 0% 96%;
+  }
 }
 
 @layer base {
@@ -107,15 +145,25 @@
     margin: 0;
     padding: 0;
   }
+  
+  code, pre, .monaco-editor {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-background/80 backdrop-blur-md border border-border shadow-sm;
+  /* ... keep existing code (glass, glass-dark utilities) */
+  
+  .futuristic-gradient {
+    @apply bg-gradient-to-br from-destructive/80 via-destructive/20 to-transparent;
   }
   
-  .glass-dark {
-    @apply bg-background/30 backdrop-blur-md border border-border/30 shadow-md;
+  .glow {
+    box-shadow: 0 0 15px 2px theme('colors.primary.DEFAULT/20');
+  }
+  
+  .futuristic .glow {
+    box-shadow: 0 0 20px 2px theme('colors.primary.DEFAULT/30');
   }
   
   .text-balance {
@@ -162,5 +210,27 @@
   
   .resize-handle-vertical {
     @apply h-1 w-full cursor-row-resize;
+  }
+  
+  .futuristic .resize-handle {
+    @apply bg-border/30 hover:bg-primary/30;
+  }
+  
+  /* Cyberpunk/Futuristic Specific Utilities */
+  .cyber-border {
+    @apply border-primary/50 border;
+    box-shadow: 0 0 0 1px theme('colors.primary.DEFAULT/20');
+  }
+  
+  .cyber-grid {
+    background-image: 
+      linear-gradient(to right, theme('colors.border') 1px, transparent 1px),
+      linear-gradient(to bottom, theme('colors.border') 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .cyber-highlight {
+    @apply text-primary;
+    text-shadow: 0 0 8px theme('colors.primary.DEFAULT/30');
   }
 }

@@ -1,8 +1,7 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
+  darkMode: ["class", ".dark", ".futuristic"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -62,16 +61,6 @@ export default {
           DEFAULT: "hsl(var(--editor))",
           foreground: "hsl(var(--editor-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))"
-        }
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -119,6 +108,16 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-5px)" },
         },
+        "cyber-glow": {
+          "0%, 100%": { 
+            boxShadow: "0 0 15px 2px rgba(255, 0, 60, 0.3)",
+            borderColor: "rgba(255, 0, 60, 0.7)"
+          },
+          "50%": { 
+            boxShadow: "0 0 25px 5px rgba(255, 0, 60, 0.5)",
+            borderColor: "rgba(255, 0, 60, 1)"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -131,6 +130,7 @@ export default {
         "slide-out-left": "slide-out-left 0.3s ease-out",
         "pulse-subtle": "pulse-subtle 2s ease-in-out infinite",
         "float": "float 3s ease-in-out infinite",
+        "cyber-glow": "cyber-glow 3s ease-in-out infinite",
       },
     },
   },

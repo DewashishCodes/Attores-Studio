@@ -1,7 +1,8 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Editor, { OnMount } from '@monaco-editor/react';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface CodeEditorProps {
   value: string;
@@ -21,6 +22,18 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   height = '100%'
 }) => {
   const editorRef = useRef<any>(null);
+  const { theme: appTheme } = useTheme();
+  const [editorTheme, setEditorTheme] = useState('vs');
+
+  useEffect(() => {
+    if (appTheme === 'dark') {
+      setEditorTheme('vs-dark');
+    } else if (appTheme === 'futuristic') {
+      setEditorTheme('hc-black');
+    } else {
+      setEditorTheme('vs');
+    }
+  }, [appTheme]);
 
   const handleEditorDidMount: OnMount = (editor) => {
     editorRef.current = editor;
@@ -43,6 +56,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
         value={value}
         onChange={(value) => onChange(value || '')}
         onMount={handleEditorDidMount}
+        theme={editorTheme}
         options={{
           minimap: { enabled: true, scale: 0.75 },
           fontSize: 14,
@@ -64,14 +78,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           readOnly,
           automaticLayout: true,
           padding: { top: 12 },
-          lineNumbers: 'on',
+          lineNumbers: "on",
           folding: true,
           glyphMargin: false,
           contextmenu: true,
           quickSuggestions: true,
           suggestOnTriggerCharacters: true,
         }}
-        theme={document.documentElement.classList.contains('dark') ? 'vs-dark' : 'vs'}
       />
     </div>
   );

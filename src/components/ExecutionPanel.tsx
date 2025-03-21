@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Terminal, Play, Copy } from 'lucide-react';
+import { Terminal, Play, Copy, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ExecutionPanelProps {
@@ -9,6 +9,8 @@ interface ExecutionPanelProps {
   error: string | null;
   executionTime: number;
   isExecuting: boolean;
+  isPyodideLoaded?: boolean;
+  loadingPyodide?: boolean;
   onExecute: () => void;
   className?: string;
 }
@@ -18,6 +20,8 @@ const ExecutionPanel: React.FC<ExecutionPanelProps> = ({
   error,
   executionTime,
   isExecuting,
+  isPyodideLoaded = true,
+  loadingPyodide = false,
   onExecute,
   className
 }) => {
@@ -49,23 +53,37 @@ const ExecutionPanel: React.FC<ExecutionPanelProps> = ({
           
           <button
             onClick={onExecute}
-            disabled={isExecuting}
+            disabled={isExecuting || loadingPyodide}
             className={cn(
               "flex items-center gap-1 px-2 py-1 rounded-md transition-colors text-xs",
-              isExecuting 
+              (isExecuting || loadingPyodide)
                 ? "bg-muted text-muted-foreground cursor-not-allowed" 
                 : "bg-primary text-primary-foreground hover:bg-primary/90"
             )}
           >
-            <Play className="h-3 w-3" />
-            Run
+            {isExecuting || loadingPyodide ? (
+              <Loader2 className="h-3 w-3 animate-spin" />
+            ) : (
+              <Play className="h-3 w-3" />
+            )}
+            {loadingPyodide ? "Loading Python..." : isExecuting ? "Running..." : "Run"}
           </button>
         </div>
       </div>
       
       <div className="flex-1 p-3 font-mono text-sm bg-editor text-editor-foreground overflow-auto custom-scrollbar">
-        {isExecuting ? (
-          <div className="flex items-center gap-2 text-muted-foreground animate-pulse">
+        {loadingPyodide ? (
+          <div className="flex flex-col gap-3 items-center justify-center h-full">
+            <Loader2 className="h-5 w-5 animate-spin text-primary" />
+            <div className="text-muted-foreground">
+              Loading Python environment...
+            </div>
+            <div className="text-xs text-muted-foreground">
+              This may take a few moments on first run
+            </div>
+          </div>
+        ) : isExecuting ? (
+          <div className="flex items-center gap-2 text-muted-foreground">
             <div className="w-3 h-3 bg-primary/50 rounded-full animate-pulse" />
             Executing code...
           </div>

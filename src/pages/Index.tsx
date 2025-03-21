@@ -17,7 +17,7 @@ const MonacoEditor = React.lazy(() => import('@monaco-editor/react'));
 
 const Index = () => {
   const { callGroqApi, isLoading, response } = useGroqApi();
-  const { executeCode, result, isExecuting } = useCodeExecution();
+  const { executeCode, result, isExecuting, isPyodideLoaded, loadingPyodide } = useCodeExecution();
   const [currentCode, setCurrentCode] = useState<string>('');
   const isMobile = useIsMobile();
 
@@ -77,6 +77,8 @@ const Index = () => {
                   error={result?.error || null}
                   executionTime={result?.executionTime || 0}
                   isExecuting={isExecuting}
+                  isPyodideLoaded={isPyodideLoaded}
+                  loadingPyodide={loadingPyodide}
                   onExecute={handleExecuteCode}
                 />
                 <ChatInterface />
@@ -105,6 +107,8 @@ const Index = () => {
                   error={result?.error || null}
                   executionTime={result?.executionTime || 0}
                   isExecuting={isExecuting}
+                  isPyodideLoaded={isPyodideLoaded}
+                  loadingPyodide={loadingPyodide}
                   onExecute={handleExecuteCode}
                 />
               </ResizablePanels>
