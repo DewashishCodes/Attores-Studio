@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Sparkles, Send, Copy, Settings, ChevronDown, ChevronUp } from 'lucide-react';
+import { Sparkles, Send, Settings, ChevronDown, ChevronUp, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import ApiKeyForm from './ApiKeyForm';
@@ -38,22 +37,6 @@ const PromptSection: React.FC<PromptSectionProps> = ({
     onSubmit(prompt);
   };
 
-  const samplePrompts = [
-    "Generate a function to check if a string is a palindrome",
-    "Create a Python script to download files from a URL",
-    "Write a recursive function to calculate factorial",
-    "Create a simple Flask API with two endpoints"
-  ];
-
-  const handleSampleClick = (sample: string) => {
-    setPrompt(sample);
-  };
-
-  const handleCopySample = (sample: string) => {
-    navigator.clipboard.writeText(sample);
-    toast.success('Prompt copied to clipboard');
-  };
-
   return (
     <div className={cn('flex flex-col h-full', className)}>
       <div className="flex items-center justify-between px-4 py-2 border-b border-border">
@@ -86,29 +69,7 @@ const PromptSection: React.FC<PromptSectionProps> = ({
         </div>
       )}
       
-      <div className="flex-1 overflow-auto p-3 space-y-2">
-        <p className="text-sm text-muted-foreground">Sample prompts:</p>
-        
-        <div className="space-y-1.5">
-          {samplePrompts.map((sample, index) => (
-            <div 
-              key={index}
-              className="group flex items-center justify-between text-xs bg-secondary/50 hover:bg-secondary p-2 rounded-md cursor-pointer transition-colors"
-              onClick={() => handleSampleClick(sample)}
-            >
-              <span className="line-clamp-1">{sample}</span>
-              <button 
-                className="opacity-0 group-hover:opacity-100 p-1 hover:bg-background rounded-md transition-all"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCopySample(sample);
-                }}
-              >
-                <Copy className="h-3 w-3 text-muted-foreground" />
-              </button>
-            </div>
-          ))}
-        </div>
+      <div className="flex-1 overflow-auto p-3">
       </div>
       
       <form onSubmit={handleSubmit} className="p-3 border-t border-border">
