@@ -1,8 +1,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { MessageSquare, Send, User, Bot } from 'lucide-react';
+import { MessageSquare, Send, User, Bot, Settings, ChevronDown, ChevronUp } from 'lucide-react';
 import { useGroqApi } from '@/hooks/useGroqApi';
+import ApiKeyForm from './ApiKeyForm';
 
 interface Message {
   id: string;
@@ -17,8 +18,9 @@ interface ChatInterfaceProps {
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ className }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [showSettings, setShowSettings] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { callGroqApi, isLoading } = useGroqApi();
+  const { callGroqApi, isLoading, apiKey, saveApiKey, clearApiKey } = useGroqApi();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -31,6 +33,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ className }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
+    
+    if (!apiKey) {
+      setShowSettings(true);
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -73,7 +80,30 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ className }) => {
           <MessageSquare className="h-4 w-4 text-primary" />
           Coding Assistant
         </h2>
+        
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className="p-1 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-xs"
+        >
+          <Settings className="h-3.5 w-3.5" />
+          API Settings
+          {showSettings ? (
+            <ChevronUp className="h-3 w-3" />
+          ) : (
+            <ChevronDown className="h-3 w-3" />
+          )}
+        </button>
       </div>
+      
+      {showSettings && (
+        <div className="p-3 border-b border-border bg-background/50">
+          <ApiKeyForm 
+            apiKeyExists={apiKey}
+            onSaveKey={saveApiKey}
+            onClearKey={clearApiKey}
+          />
+        </div>
+      )}
       
       <div className="flex-1 overflow-auto p-3 space-y-3 custom-scrollbar">
         {messages.length === 0 ? (
@@ -128,13 +158,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ className }) => {
           
           <button
             type="submit"
-            disabled={isLoading || !input.trim()}
+            disabled={isLoading || !input.trim() || !apiKey}
             className={cn(
               "absolute right-1 top-1 p-1 rounded-md transition-colors",
               isLoading 
                 ? "bg-muted text-muted-foreground cursor-not-allowed" 
                 : "bg-primary text-primary-foreground hover:bg-primary/90",
-              !input.trim() && "opacity-50 cursor-not-allowed"
+              (!input.trim() || !apiKey) && "opacity-50 cursor-not-allowed"
             )}
           >
             <Send className="h-4 w-4" />

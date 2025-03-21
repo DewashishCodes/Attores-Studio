@@ -1,25 +1,39 @@
 
 import React, { useState } from 'react';
-import { Sparkles, Send, Copy } from 'lucide-react';
+import { Sparkles, Send, Copy, Settings, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import ApiKeyForm from './ApiKeyForm';
 
 interface PromptSectionProps {
   onSubmit: (prompt: string) => void;
   isLoading: boolean;
+  apiKeyExists: boolean;
+  onSaveApiKey: (key: string) => boolean;
+  onClearApiKey: () => void;
   className?: string;
 }
 
 const PromptSection: React.FC<PromptSectionProps> = ({
   onSubmit,
   isLoading,
+  apiKeyExists,
+  onSaveApiKey,
+  onClearApiKey,
   className
 }) => {
   const [prompt, setPrompt] = useState('');
+  const [showSettings, setShowSettings] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!prompt.trim()) return;
+    
+    if (!apiKeyExists) {
+      toast.error('Please set your Groq API key first');
+      setShowSettings(true);
+      return;
+    }
     
     onSubmit(prompt);
   };
@@ -47,7 +61,30 @@ const PromptSection: React.FC<PromptSectionProps> = ({
           <Sparkles className="h-4 w-4 text-primary" />
           AI Prompt
         </h2>
+        
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className="p-1 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-xs"
+        >
+          <Settings className="h-3.5 w-3.5" />
+          API Settings
+          {showSettings ? (
+            <ChevronUp className="h-3 w-3" />
+          ) : (
+            <ChevronDown className="h-3 w-3" />
+          )}
+        </button>
       </div>
+      
+      {showSettings && (
+        <div className="p-3 border-b border-border bg-background/50">
+          <ApiKeyForm 
+            apiKeyExists={apiKeyExists}
+            onSaveKey={onSaveApiKey}
+            onClearKey={onClearApiKey}
+          />
+        </div>
+      )}
       
       <div className="flex-1 overflow-auto p-3 space-y-2">
         <p className="text-sm text-muted-foreground">Sample prompts:</p>

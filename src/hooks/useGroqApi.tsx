@@ -8,109 +8,96 @@ interface GroqResponse {
   extractedCode: string;
 }
 
+interface ApiKeyState {
+  key: string;
+  isStored: boolean;
+}
+
 export const useGroqApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<GroqResponse | null>(null);
+  const [apiKey, setApiKey] = useState<ApiKeyState>(() => {
+    const storedKey = localStorage.getItem('groq_api_key');
+    return {
+      key: storedKey || '',
+      isStored: !!storedKey
+    };
+  });
+
+  const saveApiKey = (key: string) => {
+    if (!key.trim()) {
+      toast.error('Please enter a valid API key');
+      return false;
+    }
+    
+    localStorage.setItem('groq_api_key', key);
+    setApiKey({ key, isStored: true });
+    toast.success('API key saved successfully');
+    return true;
+  };
+
+  const clearApiKey = () => {
+    localStorage.removeItem('groq_api_key');
+    setApiKey({ key: '', isStored: false });
+    toast.success('API key removed');
+  };
 
   const callGroqApi = async (prompt: string, extractCode: boolean = true): Promise<GroqResponse | null> => {
+    if (!apiKey.key) {
+      toast.error('Groq API key is not set');
+      return null;
+    }
+
     setIsLoading(true);
     setResponse(null);
     
     try {
-      // This is a simulation - in a real app, you'd make an actual API call
-      // The API key should be secured in environment variables
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Simulate API response based on prompt keywords
-      let simulatedResponse = '';
-      
-      if (prompt.toLowerCase().includes('generate') || prompt.toLowerCase().includes('create')) {
-        simulatedResponse = `I'll help you create that code. Here's a solution:
-
-###CODE_START###
-def calculate_fibonacci(n):
-    """Calculate the Fibonacci sequence up to n numbers."""
-    fibonacci = [0, 1]
-    if n <= 2:
-        return fibonacci[:n]
-        
-    for i in range(2, n):
-        fibonacci.append(fibonacci[i-1] + fibonacci[i-2])
-    
-    return fibonacci
-
-# Example usage
-result = calculate_fibonacci(10)
-print(f"Fibonacci sequence: {result}")
-###CODE_END###
-
-This function implements an iterative approach to generating the Fibonacci sequence.
-It's more memory efficient than the recursive approach for large sequences.`;
-      } else if (prompt.toLowerCase().includes('explain') || prompt.toLowerCase().includes('how')) {
-        simulatedResponse = `Let me explain how that works.
-
-The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1.
-
-###CODE_START###
-# Recursive implementation (less efficient)
-def fibonacci_recursive(n):
-    if n <= 0:
-        return []
-    elif n == 1:
-        return [0]
-    elif n == 2:
-        return [0, 1]
-    
-    fib_seq = fibonacci_recursive(n-1)
-    fib_seq.append(fib_seq[-1] + fib_seq[-2])
-    return fib_seq
-###CODE_END###
-
-The recursive approach is elegant but has exponential time complexity for larger values.`;
-      } else {
-        simulatedResponse = `I see your question about "${prompt}". 
-
-Here's a simple Python implementation that might help:
-
-###CODE_START###
-def process_data(data):
-    """Process the input data and return results."""
-    results = []
-    
-    for item in data:
-        # Simple transformation
-        processed = item * 2
-        results.append(processed)
-    
-    return results
-
-# Test with sample data
-sample_data = [1, 2, 3, 4, 5]
-output = process_data(sample_data)
-print(f"Processed data: {output}")
-###CODE_END###
-
-This is a basic implementation. Let me know if you need more specific functionality!`;
-      }
-      
-      // Extract code if requested
-      const extractedCode = extractCode ? extractCodeFromResponse(simulatedResponse) : '';
-      
-      setResponse({
-        fullResponse: simulatedResponse,
-        extractedCode
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey.key}`
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a helpful coding assistant. When generating code, surround the code with ###CODE_START### and ###CODE_END### tags.'
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          temperature: 0.5,
+          max_tokens: 2000
+        })
       });
       
-      return {
-        fullResponse: simulatedResponse,
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        console.error('Groq API error:', errorData);
+        throw new Error(`API error: ${response.status} - ${errorData?.error?.message || 'Unknown error'}`);
+      }
+      
+      const data = await response.json();
+      const responseContent = data.choices[0].message.content;
+      
+      // Extract code if requested
+      const extractedCode = extractCode ? extractCodeFromResponse(responseContent) : '';
+      
+      const result = {
+        fullResponse: responseContent,
         extractedCode
       };
       
+      setResponse(result);
+      return result;
+      
     } catch (error) {
       console.error('Error calling Groq API:', error);
-      toast.error('Failed to get response from AI');
+      toast.error(`Failed to get response from Groq: ${error instanceof Error ? error.message : 'Unknown error'}`);
       return null;
     } finally {
       setIsLoading(false);
@@ -120,6 +107,9 @@ This is a basic implementation. Let me know if you need more specific functional
   return {
     callGroqApi,
     isLoading,
-    response
+    response,
+    apiKey: apiKey.isStored,
+    saveApiKey,
+    clearApiKey
   };
 };

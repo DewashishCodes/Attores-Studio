@@ -16,7 +16,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const MonacoEditor = React.lazy(() => import('@monaco-editor/react'));
 
 const Index = () => {
-  const { callGroqApi, isLoading, response } = useGroqApi();
+  const { callGroqApi, isLoading, response, apiKey, saveApiKey, clearApiKey } = useGroqApi();
   const { executeCode, result, isExecuting, isPyodideLoaded, loadingPyodide } = useCodeExecution();
   const [currentCode, setCurrentCode] = useState<string>('');
   const isMobile = useIsMobile();
@@ -54,7 +54,10 @@ const Index = () => {
               <div className="h-1/3 border-b border-border">
                 <PromptSection 
                   onSubmit={handlePromptSubmit} 
-                  isLoading={isLoading} 
+                  isLoading={isLoading}
+                  apiKeyExists={apiKey}
+                  onSaveApiKey={saveApiKey}
+                  onClearApiKey={clearApiKey}
                 />
               </div>
               
@@ -104,7 +107,10 @@ const Index = () => {
               >
                 <PromptSection 
                   onSubmit={handlePromptSubmit} 
-                  isLoading={isLoading} 
+                  isLoading={isLoading}
+                  apiKeyExists={apiKey}
+                  onSaveApiKey={saveApiKey}
+                  onClearApiKey={clearApiKey}
                 />
                 <ExecutionPanel
                   output={result?.output || ''}
