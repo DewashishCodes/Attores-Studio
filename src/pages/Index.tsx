@@ -71,6 +71,8 @@ const Index = () => {
                 direction="horizontal"
                 className="h-1/3"
                 initialSizes={[50, 50]}
+                minSizes={[20, 20]}
+                maxSizes={[80, 80]}
               >
                 <ExecutionPanel
                   output={result?.output || ''}
@@ -91,12 +93,14 @@ const Index = () => {
               className="h-full"
               initialSizes={[20, 50, 30]}
               minSizes={[15, 30, 20]}
+              maxSizes={[35, 60, 45]}  // Allow more expansion for all panels
             >
               {/* Left column */}
               <ResizablePanels
                 direction="vertical"
                 initialSizes={[60, 40]}
                 minSizes={[30, 20]}
+                maxSizes={[70, 70]}  // Allow execution panel to expand more
               >
                 <PromptSection 
                   onSubmit={handlePromptSubmit} 
@@ -145,6 +149,7 @@ const Index = () => {
                 direction="vertical"
                 initialSizes={[60, 40]}
                 minSizes={[30, 20]}
+                maxSizes={[80, 70]}
               >
                 <OutputSection
                   fullResponse={response?.fullResponse || ''}
