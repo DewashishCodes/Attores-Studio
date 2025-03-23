@@ -1,4 +1,4 @@
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+
 
 # 🚀 ATTORES STUDIO
 A next-generation AI-powered code editor leveraging large language models to enhance the Python learning experience.
@@ -7,7 +7,7 @@ A next-generation AI-powered code editor leveraging large language models to enh
 Attores Studio is an innovative code editing environment built with an AI-first approach, specifically designed to help users learn Python programming. By combining the power of modern language models with a clean, intuitive interface, Attores Studio creates an ideal environment for beginners and intermediate Python developers to write, understand, and improve their code.
 
 ## ✨ Demo
-![Demo](path/to/demo.gif)
+![Demo](public/attores-studio-demo-gif.gif)
 
 ## 🛠️ Key Features
 
