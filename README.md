@@ -1,69 +1,111 @@
-# Welcome to your Lovable project
+![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
-## Project info
+# 🚀 ATTORES STUDIO
+A next-generation AI-powered code editor leveraging large language models to enhance the Python learning experience.
 
-**URL**: https://lovable.dev/projects/d2bd464f-41e4-45f6-9cdf-4f8a81855540
+## 🔍 Overview
+Attores Studio is an innovative code editing environment built with an AI-first approach, specifically designed to help users learn Python programming. By combining the power of modern language models with a clean, intuitive interface, Attores Studio creates an ideal environment for beginners and intermediate Python developers to write, understand, and improve their code.
 
-## How can I edit this code?
+## ✨ Demo
+![Demo](path/to/demo.gif)
 
-There are several ways of editing your application.
+## 🛠️ Key Features
 
-**Use Lovable**
+- **🤖 AI-Assisted Python Learning**: Get real-time explanations, hints, and suggestions as you code
+- **💬 Natural Language Code Generation**: Transform concepts into working Python examples through conversational prompts
+- **🔍 Interactive Code Breakdown**: Understand complex code blocks with line-by-line explanations
+- **🐞 Guided Debugging**: Identify and fix errors with AI-powered assistance
+- **🧠 Learning Path Integration**: Follow structured tutorials and exercises to build Python skills progressively
+- **✅ Code Quality Feedback**: Receive suggestions to improve readability and efficiency of your Python code
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d2bd464f-41e4-45f6-9cdf-4f8a81855540) and start prompting.
+## 💻 Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend**: React with TypeScript
+- **Build System**: Vite
+- **UI Components**:
+  - Shadcn UI (built on Radix UI primitives)
+  - Tailwind CSS with animations
+- **Code Editor**: Monaco Editor
+- **State Management & Data Fetching**:
+  - React Query (TanStack Query)
+  - React Hook Form
+- **Form Validation**: Zod
+- **Routing**: React Router
+- **Data Visualization**: Recharts
+- **Icons**: Lucide React
+- **UI Enhancements**:
+  - Sonner (toast notifications)
+  - Embla Carousel
+  - React Day Picker
+  - React Resizable Panels
+- **Development Tools**:
+  - ESLint
+  - TypeScript
+  - PostCSS / Autoprefixer
 
-**Use your preferred IDE**
+## 🚀 Get Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+You can get started with Attores Studio in two ways:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 🌐 Try It Online
+Visit [attores.netlify.app](https://attores.netlify.app) and enter your own API key to start using the application immediately without any installation.
 
-Follow these steps:
+### 💾 Local Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/attores-studio.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to the project directory
+cd attores-studio
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 📚 Documentation
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Check out our [documentation](https://github.com/yourusername/attores-studio/wiki) for more detailed information on how to use Attores Studio to its full potential.
 
-**Use GitHub Codespaces**
+## 🤝 Contributing
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Contributions are welcome! Feel free to submit a Pull Request or open an Issue.
 
-## What technologies are used for this project?
+## 🔮 Roadmap
 
-This project is built with .
+- 📊 Advanced Python data structure visualizations
+- 🌍 Support for additional programming languages
+- 👥 Community-driven learning resources
+- 📱 Mobile-responsive interface
+- 🔌 Plugin ecosystem for extensibility
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📝 License
 
-## How can I deploy this project?
+MIT License
 
-Simply open [Lovable](https://lovable.dev/projects/d2bd464f-41e4-45f6-9cdf-4f8a81855540) and click on Share -> Publish.
+Copyright &copy; 2025 Dewashish Lambore
 
-## I want to use a custom domain - is that possible?
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+✨ **Attores Studio** - *Where AI meets Python to empower learners* ✨
